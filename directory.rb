@@ -3,11 +3,11 @@ def input_students
   puts "To finish, just hit return twice"
   students = []
   months = [:January, :February, :March, :April, :May, :June, :July, :August, :September, :October, :November, :December]
-  name = gets.chomp
+  name = gets.strip
   while !name.empty? do
     puts "Please enter cohort"
     while true do
-    cohort = gets.chomp.capitalize.to_sym
+    cohort = gets.strip.capitalize.to_sym
     if cohort.empty?
       cohort = :November
       break
@@ -19,9 +19,9 @@ def input_students
       end
     end
     puts "Please enter hobbies"
-    hobbies= gets.chomp
+    hobbies= gets.strip
     puts "Please enter country of birth"
-    country = gets.chomp
+    country = gets.strip
     students << {name: name, cohort: cohort.to_sym , hobbies: hobbies, country: country}
     if students.count == 1
       puts "Now we have 1 student"
@@ -29,7 +29,7 @@ def input_students
     puts "Now we have #{students.count} students"
     end
     puts "Please Enter name"
-    name = gets.chomp
+    name = gets.strip
   end
   students
 end
