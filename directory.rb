@@ -17,10 +17,11 @@ puts "-------------"
 end
 
 def print(names)
-  names.each do |name|
-    puts "#{name[:name]}  (november cohort)"
+  names.each_with_index do |name, index|
+    puts "#{index+1} #{name[:name]}  (november cohort)"
   end
 end
+
 
 def print_footer(names)
   puts "Overall, we have #{names.count} great students"
