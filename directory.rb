@@ -17,8 +17,10 @@ puts "-------------"
 end
 
 def print(names)
-  names.each_with_index do |name, index|
-    puts "#{index+1} #{name[:name]}  (november cohort)"
+  names.each do |name|
+    if name[:name].chr == "S"
+    puts name[:name]
+    end
   end
 end
 
