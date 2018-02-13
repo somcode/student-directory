@@ -23,7 +23,11 @@ def input_students
     puts "Please enter country of birth"
     country = gets.chomp
     students << {name: name, cohort: cohort.to_sym , hobbies: hobbies, country: country}
+    if students.count == 1
+      puts "Now we have 1 student"
+    else
     puts "Now we have #{students.count} students"
+    end
     puts "Please Enter name"
     name = gets.chomp
   end
@@ -91,7 +95,11 @@ def print_by_cohort(names)
 end
 
 def print_footer(names)
-  puts "Overall, we have #{names.count} great students".center(80)
+  if names.count == 1
+    puts "Overall, we have 1 great student".center(80)
+  else
+    puts "Overall, we have #{names.count} great students".center(80)
+  end
 end
 
 students = input_students
