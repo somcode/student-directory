@@ -18,7 +18,7 @@ end
 
 def print(names)
   names.each do |name|
-    if name[:name].chr == "S"
+    if name[:name].length < 12
     puts name[:name]
     end
   end
