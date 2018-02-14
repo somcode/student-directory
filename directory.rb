@@ -1,7 +1,9 @@
+@students = []
+
 def input_students
   puts "Please enter the name of the students"
   puts "To finish, just hit return twice"
-  students = []
+  @students = []
   months = [:January, :February, :March, :April, :May, :June, :July, :August, :September, :October, :November, :December]
   # replacing chomp method with strip method
   name = gets.strip
@@ -25,16 +27,15 @@ def input_students
     hobbies= gets.strip
     puts "Please enter country of birth"
     country = gets.strip
-    students << {name: name, cohort: cohort.to_sym , hobbies: hobbies, country: country}
-    if students.count == 1
+    @students << {name: name, cohort: cohort.to_sym , hobbies: hobbies, country: country}
+    if @students.count == 1
       puts "Now we have 1 student"
     else
-    puts "Now we have #{students.count} students"
+    puts "Now we have #{@students.count} students"
     end
     puts "Please Enter name"
     name = gets.strip
   end
-  students
 end
 
 #using center method to align the output
@@ -44,60 +45,60 @@ puts "-------------".center(80)
 end
 
 # adding more information like hobbies, country
-def print(names)
+def print_student_list
   #print the list if there is at least one student in there
-  if names.count > 0
-    names.each do |name|
-      puts "Name = #{name[:name]} (#{name[:cohort]} cohort), Hobbies = #{name[:hobbies]}, Country = #{name[:country]}".center(80)
+  if @students.count > 0
+    @students.each do |student|
+      puts "Name = #{student[:name]} (#{student[:cohort]} cohort), Hobbies = #{student[:hobbies]}, Country = #{student[:country]}".center(80)
     end
   end
 end
 
 #rewite the each method with while loop to print all students
-def print_with_While(names)
+def print_with_While
   i = 0
-  while i < names.count do
-    name = names[i]
-    puts "Name = #{name[:name]} (#{name[:cohort]} cohort), Hobbies = #{name[:hobbies]}, Country = #{name[:country]}".center(80)
+  while i < @students.count do
+    student = @students[i]
+    puts "Name = #{student[:name]} (#{student[:cohort]} cohort), Hobbies = #{student[:hobbies]}, Country = #{student[:country]}".center(80)
     i += 1
   end
 end
 
 #print a number before a name
-def print_with_index(names)
-  names.each_with_index do |name, index|
-    puts "#{index+1} #{name[:name]} (november cohort)"
+def print_with_index
+  @students.each_with_index do |student, index|
+    puts "#{index+1} #{student[:name]} (#{student[:cohort]} cohort)"
   end
 end
 
 # print the students whose name begin with S
-def print_with_letter(names)
-  names.each do |name|
-    if name[:name].chr == "S"
-      puts name[:name]
+def print_with_letter
+  @students.each do |student|
+    if student[:name].chr == "S"
+      puts student[:name]
     end
   end
 end
 
 #print the students whose name is shorter than 12
-def print_with_less_twelve(names)
-  names.each do |name|
-    if name[:name].length < 12
-      puts name[:name]
+def print_with_less_twelve
+  @students.each do |student|
+    if student[:name].length < 12
+      puts student[:name]
     end
   end
 end
 
 # print names by cohort
-def print_by_cohort(names)
+def print_by_cohort
   sorted_by_cohort = {}
-  names.each do |name|
-    cohort = name[:cohort]
-    students_name = name[:name]
+  @students.each do |student|
+    cohort = student[:cohort]
+    students_name = student[:name]
     if sorted_by_cohort[cohort] == nil
       sorted_by_cohort[cohort] = []
     end
-    sorted_by_cohort[cohort].push(name[:name])
+    sorted_by_cohort[cohort].push(student[:name])
   end
   puts "Students sorted by cohort:"
   sorted_by_cohort.each do |cohort, name_array|
@@ -106,16 +107,54 @@ def print_by_cohort(names)
   end
 end
 
-def print_footer(names)
+def print_footer
   #using singular and plural form
-  if names.count == 1
+  if @students.count == 1
     puts "Overall, we have 1 great student".center(80)
   else
-    puts "Overall, we have #{names.count} great students".center(80)
+    puts "Overall, we have #{@students.count} great students".center(80)
   end
 end
 
-#Adding an interactive menu
+
+
+# we are defining seperate methos to refactor interactive_menu using them
+def print_menu
+  puts "1. Input the students"
+  puts "2. Show the students"
+  puts "9. Exit"
+end
+
+def show_students
+  print_header
+  print_student_list
+  print_footer
+end
+
+def process(selection)
+  case selection
+  when "1"
+    input_students
+  when "2"
+    show_students
+  when "9"
+    exit
+  else
+    puts "I dont know what you mean, try again"
+  end
+end
+
+
+# refactored method
+def interactive_menu
+  loop do
+    print_menu
+    process(gets.chomp)
+  end
+end
+
+=begin
+#Adding an interactive menu and later we will refactor this method
 def interactive_menu
   students = []
   loop do
@@ -140,6 +179,8 @@ def interactive_menu
     end
   end
 end
+=end
+
 
 #students = input_students
 #print_header
