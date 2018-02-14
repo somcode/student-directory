@@ -6,13 +6,13 @@ def input_students
   @students = []
   months = [:January, :February, :March, :April, :May, :June, :July, :August, :September, :October, :November, :December]
   # replacing chomp method with strip method
-  name = gets.strip
+  name = STDIN.gets.strip
   while !name.empty? do
     #ask user input for cohort , supply a default value if the value is empty
     #convert it to symbol, check for users typo
     puts "Please enter cohort"
     while true do
-    cohort = gets.strip.capitalize.to_sym
+    cohort = STDIN.gets.strip.capitalize.to_sym
     if cohort.empty?
       cohort = :November
       break
@@ -24,9 +24,9 @@ def input_students
       end
     end
     puts "Please enter hobbies"
-    hobbies= gets.strip
+    hobbies= STDIN.gets.strip
     puts "Please enter country of birth"
-    country = gets.strip
+    country = STDIN.gets.strip
     @students << {name: name, cohort: cohort.to_sym , hobbies: hobbies, country: country}
     if @students.count == 1
       puts "Now we have 1 student"
@@ -34,7 +34,7 @@ def input_students
     puts "Now we have #{@students.count} students"
     end
     puts "Please Enter name"
-    name = gets.strip
+    name = STDIN.gets.strip
   end
 end
 
@@ -162,8 +162,8 @@ def save_students
 end
 
 #loading the data from a file
-def load_students
-  file = File.open("students.csv", "r")
+def load_students(filename = "students.csv")
+  file = File.open(filename, "r")
   file.readlines.each do |line|
   name, cohort, hobby, country = line.chomp.split(",")
     @students << {name: name, cohort: cohort.to_sym, hobby: hobby, country: country}
@@ -171,12 +171,23 @@ def load_students
   file.close
 end
 
+def try_load_students
+  filename = ARGV.first
+  return if filename.nil?
+  if File.exist?(filename)
+    load_students(filename)
+    puts "Loaded #{@students.count} from #{filename}"
+  else
+    puts "Sorry, #{filename} doesn't exist."
+  end
+end
+
 
 # refactored method
 def interactive_menu
   loop do
     print_menu
-    process(gets.chomp)
+    process(STDIN.gets.chomp)
   end
 end
 
