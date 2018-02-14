@@ -23,11 +23,11 @@ def input_students
         puts "cohort does not exist, please enter again"
       end
     end
-    puts "Please enter hobbies"
-    hobbies= STDIN.gets.strip
+    puts "Please enter hobby"
+    hobby= STDIN.gets.strip
     puts "Please enter country of birth"
     country = STDIN.gets.strip
-    @students << {name: name, cohort: cohort.to_sym , hobbies: hobbies, country: country}
+    add_student_to_array(name, cohort, hobby, country)
     if @students.count == 1
       puts "Now we have 1 student"
     else
@@ -36,6 +36,10 @@ def input_students
     puts "Please Enter name"
     name = STDIN.gets.strip
   end
+end
+
+def add_student_to_array(name, cohort, hobby, country)
+  @students << {name: name, cohort: cohort.to_sym , hobby: hobby, country: country}
 end
 
 #using center method to align the output
@@ -49,7 +53,7 @@ def print_student_list
   #print the list if there is at least one student in there
   if @students.count > 0
     @students.each do |student|
-      puts "Name = #{student[:name]} (#{student[:cohort]} cohort), Hobbies = #{student[:hobbies]}, Country = #{student[:country]}".center(80)
+      puts "Name = #{student[:name]} (#{student[:cohort]} cohort), hobby = #{student[:hobby]}, Country = #{student[:country]}".center(80)
     end
   end
 end
@@ -59,7 +63,7 @@ def print_with_While
   i = 0
   while i < @students.count do
     student = @students[i]
-    puts "Name = #{student[:name]} (#{student[:cohort]} cohort), Hobbies = #{student[:hobbies]}, Country = #{student[:country]}".center(80)
+    puts "Name = #{student[:name]} (#{student[:cohort]} cohort), hobby = #{student[:hobby]}, Country = #{student[:country]}".center(80)
     i += 1
   end
 end
@@ -166,7 +170,7 @@ def load_students(filename = "students.csv")
   file = File.open(filename, "r")
   file.readlines.each do |line|
   name, cohort, hobby, country = line.chomp.split(",")
-    @students << {name: name, cohort: cohort.to_sym, hobby: hobby, country: country}
+  add_student_to_array(name, cohort, hobby, country)
   end
   file.close
 end
