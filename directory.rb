@@ -3,8 +3,11 @@ def input_students
   puts "To finish, just hit return twice"
   students = []
   months = [:January, :February, :March, :April, :May, :June, :July, :August, :September, :October, :November, :December]
+  # replacing chomp method with strip method
   name = gets.strip
   while !name.empty? do
+    #ask user input for cohort , supply a default value if the value is empty
+    #convert it to symbol, check for users typo
     puts "Please enter cohort"
     while true do
     cohort = gets.strip.capitalize.to_sym
@@ -34,18 +37,23 @@ def input_students
   students
 end
 
-
+#using center method to align the output
 def print_header
 puts "The students of my cohort at Makers Academy".center(80)
 puts "-------------".center(80)
 end
 
+# adding more information like hobbies, country
 def print(names)
-  names.each do |name|
-    puts "#{name[:name]} (#{name[:cohort]} cohort)"
+  #print the list if there is at least one student in there
+  if names.count > 0
+    names.each do |name|
+      puts "Name = #{name[:name]} (#{name[:cohort]} cohort), Hobbies = #{name[:hobbies]}, Country = #{name[:country]}".center(80)
+    end
   end
 end
 
+#rewite the each method with while loop to print all students
 def print_with_While(names)
   i = 0
   while i < names.count do
@@ -55,12 +63,14 @@ def print_with_While(names)
   end
 end
 
+#print a number before a name
 def print_with_index(names)
   names.each_with_index do |name, index|
     puts "#{index+1} #{name[:name]} (november cohort)"
   end
 end
 
+# print the students whose name begin with S
 def print_with_letter(names)
   names.each do |name|
     if name[:name].chr == "S"
@@ -69,6 +79,7 @@ def print_with_letter(names)
   end
 end
 
+#print the students whose name is shorter than 12
 def print_with_less_twelve(names)
   names.each do |name|
     if name[:name].length < 12
@@ -77,6 +88,7 @@ def print_with_less_twelve(names)
   end
 end
 
+# print names by cohort
 def print_by_cohort(names)
   sorted_by_cohort = {}
   names.each do |name|
@@ -95,6 +107,7 @@ def print_by_cohort(names)
 end
 
 def print_footer(names)
+  #using singular and plural form
   if names.count == 1
     puts "Overall, we have 1 great student".center(80)
   else
@@ -104,5 +117,10 @@ end
 
 students = input_students
 print_header
-print_by_cohort(students)
+print(students)
+#print_with_While(students)
+#print_with_index(students)
+#print_with_letter(students)
+#print_with_less_twelve(students)
+#print_by_cohort(students)
 print_footer(students)
